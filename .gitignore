@@ -49,3 +49,6 @@ aws-exports.js
 amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
+Carthage/
+Cartfile.resolved
+.build
