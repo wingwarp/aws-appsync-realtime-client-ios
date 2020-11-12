@@ -8,7 +8,8 @@ let package = Package(
     products: [
         .library(
             name: "AppSyncRealTimeClient",
-            targets: ["AppSyncRealTimeClient"]),
+            targets: ["AppSyncRealTimeClient"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/daltoniam/Starscream", .upToNextMinor(from: "3.1.1"))
