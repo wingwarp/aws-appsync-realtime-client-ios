@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -74,6 +74,7 @@
 		FA91B20A24D306430017404D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA91B20824D306430017404D /* LaunchScreen.storyboard */; };
 		FA91B20F24D306550017404D /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 21D38B4B2409B6C000EC2A8D /* amplifyconfiguration.json */; };
 		FA91B21024D306730017404D /* AppSyncRTCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB5AA1D24D1CD31001F370F /* AppSyncRTCProvider.swift */; };
+		FA9EC457255DA7C80088D765 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = FA9EC456255DA7C80088D765 /* Starscream */; };
 		FAAEF946255229DA009DA4D5 /* AtomicValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2EFABB2550CAC6007698C7 /* AtomicValue.swift */; };
 		FAB5AA1F24D1CD84001F370F /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 21D38B4B2409B6C000EC2A8D /* amplifyconfiguration.json */; };
 		FAB7E91224D2644E00DF1EA1 /* RealtimeConnectionProvider+StaleConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217F39B12406E98300F1A0B3 /* RealtimeConnectionProvider+StaleConnection.swift */; };
@@ -194,6 +195,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA9EC457255DA7C80088D765 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,7 +241,6 @@
 				FA91B1FC24D3063E0017404D /* AppSyncRTCSample */,
 				21D38B542409B93F00EC2A8D /* HostApp */,
 				217F39902405D9D500F1A0B3 /* Products */,
-				D146D6DDE2251CCA7A4ECD7F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -466,13 +467,6 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		D146D6DDE2251CCA7A4ECD7F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		FA67507924D338BF005A1345 /* TestSupport */ = {
 			isa = PBXGroup;
 			children = (
@@ -533,6 +527,9 @@
 			dependencies = (
 			);
 			name = AppSyncRealTimeClient;
+			packageProductDependencies = (
+				FA9EC456255DA7C80088D765 /* Starscream */,
+			);
 			productName = AppSyncRealTimeClient;
 			productReference = 217F398F2405D9D500F1A0B3 /* AppSyncRealTimeClient.framework */;
 			productType = "com.apple.product-type.framework";
@@ -652,6 +649,9 @@
 				Base,
 			);
 			mainGroup = 217F39852405D9D500F1A0B3;
+			packageReferences = (
+				FA9EC455255DA7C80088D765 /* XCRemoteSwiftPackageReference "Starscream" */,
+			);
 			productRefGroup = 217F39902405D9D500F1A0B3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -730,7 +730,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" --config \"${SRCROOT}/.swiftformat\" --swiftversion \"$SWIFT_VERSION\" \"${SRCROOT}/${PRODUCT_NAME}\"\n";
+			shellScript = "cd \"build-support\"\n#Uncomment this line temporarily to update the version used to the latest matching your build-support/Package.swift file\n#swift package update\n\n# Use xcrun with an explicit `sdk` argument until https://bugs.swift.org/browse/SR-9216 is fixed\n/usr/bin/xcrun --sdk macosx swift run -c release swiftformat --config \"${SRCROOT}/.swiftformat\" --swiftversion \"$SWIFT_VERSION\" \"${SRCROOT}/${PRODUCT_NAME}\"\n";
 		};
 		FA91B21224D308550017404D /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -748,7 +748,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\" --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/${PRODUCT_NAME}\"\n";
+			shellScript = "cd \"build-support\"\n#Uncomment this line temporarily to update the version used to the latest matching your build-support/Package.swift file\n#swift package update\n\n# Use xcrun with an explicit `sdk` argument until https://bugs.swift.org/browse/SR-9216 is fixed\n/usr/bin/xcrun --sdk macosx swift run -c release swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/${PRODUCT_NAME}\"\n";
 		};
 		FA91B21324D308800017404D /* SwiftFormat */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -766,7 +766,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" --config \"${SRCROOT}/.swiftformat\" --swiftversion \"$SWIFT_VERSION\" \"${SRCROOT}/${PRODUCT_NAME}\"\n";
+			shellScript = "cd \"build-support\"\n#Uncomment this line temporarily to update the version used to the latest matching your build-support/Package.swift file\n#swift package update\n\n# Use xcrun with an explicit `sdk` argument until https://bugs.swift.org/browse/SR-9216 is fixed\n/usr/bin/xcrun --sdk macosx swift run -c release swiftformat --config \"${SRCROOT}/.swiftformat\" --swiftversion \"$SWIFT_VERSION\" \"${SRCROOT}/${PRODUCT_NAME}\"\n";
 		};
 		FA91B21424D308B00017404D /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -784,7 +784,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\" --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/${PRODUCT_NAME}\"\n";
+			shellScript = "cd \"build-support\"\n#Uncomment this line temporarily to update the version used to the latest matching your build-support/Package.swift file\n#swift package update\n\n# Use xcrun with an explicit `sdk` argument until https://bugs.swift.org/browse/SR-9216 is fixed\n/usr/bin/xcrun --sdk macosx swift run -c release swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/${PRODUCT_NAME}\"\n";
 		};
 		FA91B21524D308C70017404D /* SwiftFormat */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -802,7 +802,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" --config \"${SRCROOT}/.swiftformat\" --swiftversion \"$SWIFT_VERSION\" \"${SRCROOT}/${PRODUCT_NAME}\"\n";
+			shellScript = "cd \"build-support\"\n#Uncomment this line temporarily to update the version used to the latest matching your build-support/Package.swift file\n#swift package update\n\n# Use xcrun with an explicit `sdk` argument until https://bugs.swift.org/browse/SR-9216 is fixed\n/usr/bin/xcrun --sdk macosx swift run -c release swiftformat --config \"${SRCROOT}/.swiftformat\" --swiftversion \"$SWIFT_VERSION\" \"${SRCROOT}/${PRODUCT_NAME}\"\n";
 		};
 		FA91B21624D308D90017404D /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -820,7 +820,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\" --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/${PRODUCT_NAME}\"\n";
+			shellScript = "cd \"build-support\"\n#Uncomment this line temporarily to update the version used to the latest matching your build-support/Package.swift file\n#swift package update\n\n# Use xcrun with an explicit `sdk` argument until https://bugs.swift.org/browse/SR-9216 is fixed\n/usr/bin/xcrun --sdk macosx swift run -c release swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/${PRODUCT_NAME}\"\n";
 		};
 		FA91B21724D308EB0017404D /* SwiftFormat */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -838,7 +838,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" --config \"${SRCROOT}/.swiftformat\" --swiftversion \"$SWIFT_VERSION\" \"${SRCROOT}/${PRODUCT_NAME}\"\n";
+			shellScript = "cd \"build-support\"\n#Uncomment this line temporarily to update the version used to the latest matching your build-support/Package.swift file\n#swift package update\n\n# Use xcrun with an explicit `sdk` argument until https://bugs.swift.org/browse/SR-9216 is fixed\n/usr/bin/xcrun --sdk macosx swift run -c release swiftformat --config \"${SRCROOT}/.swiftformat\" --swiftversion \"$SWIFT_VERSION\" \"${SRCROOT}/${PRODUCT_NAME}\"\n";
 		};
 		FA91B21824D308FD0017404D /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -856,7 +856,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\" --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/${PRODUCT_NAME}\"\n";
+			shellScript = "cd \"build-support\"\n#Uncomment this line temporarily to update the version used to the latest matching your build-support/Package.swift file\n#swift package update\n\n# Use xcrun with an explicit `sdk` argument until https://bugs.swift.org/browse/SR-9216 is fixed\n/usr/bin/xcrun --sdk macosx swift run -c release swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/${PRODUCT_NAME}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1387,6 +1387,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FA9EC455255DA7C80088D765 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FA9EC456255DA7C80088D765 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA9EC455255DA7C80088D765 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 217F39862405D9D500F1A0B3 /* Project object */;
 }

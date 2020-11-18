@@ -51,4 +51,8 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 Carthage/
 Cartfile.resolved
+
+# SPM *
 .build
+.swiftpm
+**/xcshareddata/swiftpm
