@@ -20,7 +20,7 @@ struct AppSyncLogger {
 
     static func debug(_ log: String) {
         if #available(iOS 10.0, *) {
-            os_log("%@", type: .debug, log)
+            // os_log("%@", type: .debug, log)
         } else {
             NSLog("%@", log)
         }
@@ -28,7 +28,7 @@ struct AppSyncLogger {
 
     static func verbose(_ log: String) {
         if #available(iOS 10.0, *) {
-            os_log("%@", type: .debug, log)
+            // os_log("%@", type: .debug, log)
         } else {
             NSLog("%@", log)
         }
@@ -36,7 +36,7 @@ struct AppSyncLogger {
 
     static func info(_ log: String) {
         if #available(iOS 10.0, *) {
-            os_log("%@", type: .info, log)
+            // os_log("%@", type: .info, log)
         } else {
             NSLog("%@", log)
         }
@@ -44,7 +44,7 @@ struct AppSyncLogger {
 
     static func warn(_ log: String) {
         if #available(iOS 10.0, *) {
-            os_log("%@", type: .info, log)
+            // os_log("%@", type: .info, log)
         } else {
             NSLog("%@", log)
         }
