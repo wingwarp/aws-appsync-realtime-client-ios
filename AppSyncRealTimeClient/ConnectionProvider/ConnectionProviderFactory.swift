@@ -19,7 +19,7 @@ public enum ConnectionProviderFactory {
         connectionType: SubscriptionConnectionType
     ) -> ConnectionProvider {
         Self.createConnectionProvider(
-            urlequest: URLRequest(url: url),
+            for: URLRequest(url: url),
             authInterceptor: authInterceptor,
             connectionType: connectionType
         ) 
