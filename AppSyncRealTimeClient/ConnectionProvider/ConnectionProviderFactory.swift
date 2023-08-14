@@ -18,7 +18,7 @@ public enum ConnectionProviderFactory {
         authInterceptor: AuthInterceptor,
         connectionType: SubscriptionConnectionType
     ) -> ConnectionProvider {
-        createConnectionProvider(
+        Self.createConnectionProvider(
             urlequest: URLRequest(url: url),
             authInterceptor: authInterceptor,
             connectionType: connectionType
