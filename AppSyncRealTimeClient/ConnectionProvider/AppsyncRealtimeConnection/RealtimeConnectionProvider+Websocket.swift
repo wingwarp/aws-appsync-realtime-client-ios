@@ -1,6 +1,6 @@
 //
-// Copyright 2018-2021 Amazon.com,
-// Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com Inc. or its affiliates.
+// All Rights Reserved.
 //
 // SPDX-License-Identifier: Apache-2.0
 //
@@ -12,7 +12,7 @@ extension RealtimeConnectionProvider: AppSyncWebsocketDelegate {
     public func websocketDidConnect(provider: AppSyncWebsocketProvider) {
         // Call the ack to finish the connection handshake
         // Inform the callback when ack gives back a response.
-        AppSyncLogger.debug("WebsocketDidConnect, sending init message...")
+        AppSyncLogger.debug("[RealtimeConnectionProvider] WebsocketDidConnect, sending init message")
         sendConnectionInitMessage()
         startStaleConnectionTimer()
     }
@@ -48,10 +48,17 @@ extension RealtimeConnectionProvider: AppSyncWebsocketDelegate {
 
         switch response.responseType {
         case .connectionAck:
+            AppSyncLogger.debug("[RealtimeConnectionProvider] received connectionAck")
             connectionQueue.async { [weak self] in
                 self?.handleConnectionAck(response: response)
             }
         case .error:
+            AppSyncLogger.verbose("[RealtimeConnectionProvider] received error")
+            connectionQueue.async { [weak self] in
+                self?.handleError(response: response)
+            }
+        case .connectionError:
+            AppSyncLogger.verbose("[RealtimeConnectionProvider] received error")
             connectionQueue.async { [weak self] in
                 self?.handleError(response: response)
             }
@@ -60,7 +67,7 @@ extension RealtimeConnectionProvider: AppSyncWebsocketDelegate {
                 updateCallback(event: .data(appSyncResponse))
             }
         case .keepAlive:
-            AppSyncLogger.debug("\(self) received keepAlive")
+            AppSyncLogger.verbose("[RealtimeConnectionProvider] received keepAlive")
         }
     }
 
@@ -85,7 +92,7 @@ extension RealtimeConnectionProvider: AppSyncWebsocketDelegate {
 
         let interval = value / 1_000
 
-        guard interval != staleConnectionTimer?.interval else {
+        guard interval != staleConnectionTimer.interval else {
             return
         }
 
@@ -95,40 +102,28 @@ extension RealtimeConnectionProvider: AppSyncWebsocketDelegate {
             instructions: \(interval)s
             """
         )
-        staleConnectionTimeout.set(interval)
-        startStaleConnectionTimer()
+        resetStaleConnectionTimer(interval: interval)
     }
 
     /// Resolves & dispatches errors from `response`.
     ///
     /// - Warning: This method must be invoked on the `connectionQueue`
-    private func handleError(response: RealtimeConnectionProviderResponse) {
-        // If we get an error in connection inprogress state, return back as connection error.
-        guard status != .inProgress else {
+    func handleError(response: RealtimeConnectionProviderResponse) {
+        // If we get an error while the connection was inProgress state,
+        let error = response.toConnectionProviderError(connectionState: status)
+        if status == .inProgress {
             status = .notConnected
-            updateCallback(event: .error(ConnectionProviderError.connection))
-            return
         }
 
-        // Return back as generic error if there is no identifier.
-        guard let identifier = response.id else {
-            let genericError = ConnectionProviderError.other
-            updateCallback(event: .error(genericError))
-            return
+        // If limit exceeded is for a particular subscription identifier, throttle using `limitExceededSubject`
+        if case .limitExceeded(let id) = error,
+           id == nil,
+           #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) {
+            self.limitExceededSubject.send(error)
+        } else {
+            updateCallback(event: .error(error))
         }
-
-        // Map to limit exceed error if we get MaxSubscriptionsReachedException
-        if let errorType = response.payload?["errorType"],
-            errorType == "MaxSubscriptionsReachedException" {
-            let limitExceedError = ConnectionProviderError.limitExceeded(identifier)
-            updateCallback(event: .error(limitExceedError))
-            return
-        }
-
-        let subscriptionError = ConnectionProviderError.subscription(identifier, response.payload)
-        updateCallback(event: .error(subscriptionError))
     }
-
 }
 
 extension RealtimeConnectionProviderResponse {
