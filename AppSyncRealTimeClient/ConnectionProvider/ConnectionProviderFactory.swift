@@ -10,6 +10,21 @@ import Foundation
 /// Create connection providers to connect to the websocket endpoint of the AppSync endpoint.
 public enum ConnectionProviderFactory {
 
+    // JTM: my attempt not have to upgrade all AWS.
+    // Added url parameter because called from AppSyncClient
+    // OIDCBasedConnectionPool.swift
+    public static func createConnectionProvider(
+        for url: URL,
+        authInterceptor: AuthInterceptor,
+        connectionType: SubscriptionConnectionType
+    ) -> ConnectionProvider {
+        createConnectionProvider(
+            urlequest: URLRequest(url: url),
+            authInterceptor: authInterceptor,
+            connectionType: connectionType
+        ) 
+    }
+
     public static func createConnectionProvider(
         for urlRequest: URLRequest,
         authInterceptor: AuthInterceptor,
