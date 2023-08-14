@@ -80,6 +80,4 @@ struct AppSyncLogger {
         }
     }
 
-    }
-
 }
