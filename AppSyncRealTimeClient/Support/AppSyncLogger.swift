@@ -38,7 +38,7 @@ struct AppSyncLogger {
         }
 
         if #available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *) {
-            os_log("%@", type: .info, log)
+//            os_log("%@", type: .info, log)
         } else {
             NSLog("%@", log)
         }
@@ -50,7 +50,7 @@ struct AppSyncLogger {
         }
 
         if #available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *) {
-            os_log("%@", type: .info, log)
+//            os_log("%@", type: .info, log)
         } else {
             NSLog("%@", log)
         }
@@ -80,29 +80,6 @@ struct AppSyncLogger {
         }
     }
 
-    static func info(_ log: String) {
-        if #available(iOS 10.0, *) {
-            // os_log("%@", type: .info, log)
-        } else {
-            NSLog("%@", log)
-        }
     }
 
-    static func warn(_ log: String) {
-        if #available(iOS 10.0, *) {
-            // os_log("%@", type: .info, log)
-        } else {
-            NSLog("%@", log)
-        }
-    }
-
-    static func error(_ error: Error) {
-        if #available(iOS 10.0, *) {
-            os_log("%@", type: .error, error.localizedDescription)
-        } else {
-            NSLog("%@", error.localizedDescription)
-        }
-    }
-=======
->>>>>>> upstream/main
 }
