@@ -54,6 +54,16 @@ install_framework()
     rmdir "${source}/${BCSYMBOLMAP_DIR}"
   fi
 
+  if [ -d "${source}/${BCSYMBOLMAP_DIR}" ]; then
+    # Locate and install any .bcsymbolmaps if present, and remove them from the .framework before the framework is copied
+    find "${source}/${BCSYMBOLMAP_DIR}" -name "*.bcsymbolmap"|while read f; do
+      echo "Installing $f"
+      install_bcsymbolmap "$f" "$destination"
+      rm "$f"
+    done
+    rmdir "${source}/${BCSYMBOLMAP_DIR}"
+  fi
+
   # Use filter instead of exclude so missing patterns don't throw errors.
   echo "rsync --delete -av "${RSYNC_PROTECT_TMP_FILES[@]}" --links --filter \"- CVS/\" --filter \"- .svn/\" --filter \"- .git/\" --filter \"- .hg/\" --filter \"- Headers\" --filter \"- PrivateHeaders\" --filter \"- Modules\" \"${source}\" \"${destination}\""
   rsync --delete -av "${RSYNC_PROTECT_TMP_FILES[@]}" --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "${source}" "${destination}"

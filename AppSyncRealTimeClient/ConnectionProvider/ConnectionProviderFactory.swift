@@ -14,18 +14,6 @@ public enum ConnectionProviderFactory {
     // Added url parameter because called from AppSyncClient
     // OIDCBasedConnectionPool.swift
     public static func createConnectionProvider(
-        for url: URL,
-        authInterceptor: AuthInterceptor,
-        connectionType: SubscriptionConnectionType
-    ) -> ConnectionProvider {
-        Self.createConnectionProvider(
-            for: URLRequest(url: url),
-            authInterceptor: authInterceptor,
-            connectionType: connectionType
-        ) 
-    }
-
-    public static func createConnectionProvider(
         for urlRequest: URLRequest,
         authInterceptor: AuthInterceptor,
         connectionType: SubscriptionConnectionType
